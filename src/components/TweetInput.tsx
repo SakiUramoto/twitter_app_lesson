@@ -17,7 +17,7 @@ const TweetInput = () => {
           e.target.value="";
         }
       };
-    const sendTweet = (e:React.FormEvent<HTMLInputElement>)=>{
+    const sendTweet = (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
         if(tweetImage){
             const S ="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -63,17 +63,51 @@ const TweetInput = () => {
         setTweetMsg("");
           
     };
-    return<div>
-        <Avatar
-         className={styles.tweet_avatr}
-         src={user.photoUrl}
-         onClick={ async ()=>{
-             await auth.signOut();
-         }}
-        />
-        
-    </div>;
-    
+    return(
+        <>
+        <form onSubmit={sendTweet}>
+          <div className={styles.tweet_form}>
+            <Avatar
+             className={styles.tweet_avatr}
+             src={user.photoUrl}
+             onClick={ async ()=>{
+                 await auth.signOut();
+             }}
+            /> 
+            <input
+            className={styles.tweet_input}
+            placeholder="what's happening?"
+            type="text"
+            autoFocus
+            value={tweetMsg}
+            onChange={(e) => setTweetMsg(e.target.value)}
+            />
+            <IconButton>
+                <label>
+                    <AddAPhotoIcon
+                    className={
+                        tweetImage ? styles.tweet_addIconLoaded : styles.tweet_addIcon
+                    }
+                    />
+                    <input
+                     className={styles.tweet_hiddenIcon}
+                     type="file"
+                     onChange={onChangeImageHandler}
+                     /> 
+                </label>
+            </IconButton>        
+          </div>
+          <Button
+          type="submit"
+          disabled={!tweetMsg}
+          className={
+              tweetMsg ? styles.tweet_sendBtn: styles.tweet_sendDisableBtn
+          }>
+              Tweet
+          </Button>
+        </form>
+        </>
+    );
 };
-
+///
 export default TweetInput
