@@ -37,6 +37,7 @@ const Feed : React.FC = () => {
       unSub();
     };
   },[]);
+  
   return (
     <div className={styles.Feed}>
       
@@ -50,7 +51,7 @@ const Feed : React.FC = () => {
         avatar={post.avatar} 
         image={post.image} 
         text={post.text}
-        timeStamp={post.timestamp}
+        timestamp={post.timestamp}
         username={post.username}
         />
         ))}   
